@@ -29,8 +29,11 @@ public class Optimization {
 		System.out.print("\nCalorie - High (2), Low (1), n/a (0): ");
 		int calorieChoice = scanner.nextInt();
 		
-		FoodItem optimalChoice = optimize(foodItems, costMax, proteinChoice, carbChoice, calorieChoice);
+		NormalizedSort protein = new NormalizedSort(foodItems,"high");
+
+		//FoodItem optimalChoice = optimize(foodItems, costMax, proteinChoice, carbChoice, calorieChoice);
 		
+
 		System.out.println("The best food option is: " + optimalChoice.getName());
 		
 	}
@@ -53,7 +56,7 @@ public class Optimization {
 			if(carbChoice > 0){
 				carbList.add(item.getCarbs());
 			}
-			
+			 
 			if(calorieChoice > 0){
 				calorieList.add(item.getCalories());
 			}
