@@ -12,8 +12,8 @@ class NormalizedSort {
 	 */
 	double a = 0;
 	double b = 1;
-	double A = 0;
-	double B = 0;
+	double A = Double.MAX_VALUE;
+	double B = Double.MIN_VALUE;
 
 	TreeMap<FoodItem, Double> foodList = new TreeMap<FoodItem, Double>();
 	boolean highOrLow = true; //high = 1, low = 0
@@ -27,8 +27,15 @@ class NormalizedSort {
 			System.err.printf("invalid string for high or low");
 			System.exit(0);
 		}
+
 		for(FoodItem f: list.keySet()){
-				System.out.printf("%s: %d\n", f.getName(), list.get(f));
+					findMin(list.get(f));
+					findMax(list.get(f));
+				
+		}
+		
+		for(FoodItem f: list.keySet()){
+				//System.out.printf("%s: %d\n", f.getName(), list.get(f));
 				//System.out.printf("Variable name: %d\n", list.get(f).getClass().getName());
 				Double rawinput = list.get(f); //error cant cast to
 				Double newWeight = NormalizedValue(rawinput);
@@ -46,6 +53,12 @@ class NormalizedSort {
 			//System.exit(0);
 		}
 		for(FoodItem f: foodList.keySet()){
+					findMin(foodList.get(f));
+					findMax(foodList.get(f));
+				
+			
+		}
+		for(FoodItem f: foodList.keySet()){
 			if( highOrLow && f.getCalories() >= limit ){
 				this.foodList.put(f, NormalizedValue(foodList.get(f)));
 
@@ -61,6 +74,13 @@ class NormalizedSort {
 	NormalizedSort(TreeMap<FoodItem, Double> foodList, double costLimit){ // for cost
 
 		for(FoodItem f: foodList.keySet()){
+				findMin(foodList.get(f));
+				findMax(foodList.get(f));
+				
+
+		}
+	
+		for(FoodItem f: foodList.keySet()){
 		 if(f.getCost() <= costLimit){
 				this.foodList.put(f, NormalizedValue(foodList.get(f)));
 
@@ -68,6 +88,24 @@ class NormalizedSort {
 		}
 
 	} 
+
+	boolean findMin(double d){ // returns true if min
+		if(d< A){
+			A = d;
+			return true;
+		} else{
+			return false;
+		}
+	}
+
+	boolean findMax(double d){ // returns true if max
+		if(d> B){
+			B = d;
+			return true;
+		} else{
+			return false;
+		}
+	}
 
 	//x = input value
 	Double NormalizedValue(int i){
@@ -127,8 +165,8 @@ class NormalizedSort {
 				protein.put(f, new Double(f.getProtein())); 
 				System.out.printf("food: %s protein: %s\n",f.getName(), (protein.get(f)).toString());
 			}
-			if(carbChoice != 0 ){ carbs.put(f, f.getCarbs()); }
-			if(calorieChoice != 0 ){ calories.put(f, f.getCalories()); }
+			if(carbChoice != 0 ){ carbs.put(f, new Double(f.getCarbs())); }
+			if(calorieChoice != 0 ){ calories.put(f, new Double(f.getCalories())); }
 		}
 		NormalizedSort weightedCost = new NormalizedSort(cost, costMax);
 		NormalizedSort weightedProtein;
@@ -168,7 +206,7 @@ class NormalizedSort {
 
 		//carbs
 		if(carbs.size() !=0){
-			weightedCarbs = new NormalizedSort(carbs, proteinChoice);
+			weightedCarbs = new NormalizedSort(carbs, carbChoice);
 			if(options.size() ==0){
 				for(FoodItem f : weightedCarbs.foodList.keySet()){
 					options.put(f, weightedCarbs.foodList.get(f));
@@ -182,7 +220,7 @@ class NormalizedSort {
 
 		//calories
 		if(calories.size() !=0){
-			weightedCalories = new NormalizedSort(calories, proteinChoice);
+			weightedCalories = new NormalizedSort(calories, calorieChoice);
 			if(options.size() ==0){
 				for(FoodItem f : weightedCalories.foodList.keySet()){
 					options.put(f, weightedCalories.foodList.get(f));
@@ -194,11 +232,21 @@ class NormalizedSort {
 			}
 		}
 
-		Map results = sortByValues(options);
-		for( Object f : results.keySet()){
-			System.out.println(results.get(f).toString());
-			System.out.println("|");
+		for(FoodItem f : options.keySet()){
+			System.out.printf("food: %s\t weight: %s \n",f.getName(),options.get(f).toString());
 		}
+
+		/*Map results = sortByValues(options);
+		System.out.printf("results size:%d\n",results.size());
+		for(Object f : results.values()){
+			if(f instanceof FoodItem){
+				System.out.printf("-");
+			}
+		}*/
+		/*for( Object f : results.keySet()){
+			System.out.println(results.get(f));
+			System.out.println("|");
+		}*/
 
 	}
 
