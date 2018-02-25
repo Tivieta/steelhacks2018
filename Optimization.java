@@ -29,11 +29,13 @@ public class Optimization{
 		}
 		
 		// Remove items with prices greater than the maximum cost provided by the user
-		for(int i = 0; i < foodDataBase.size(); i++ ){
-			if(foodDataBase.get(i).getCost() > costMax){
+		int i = 0;
+		while( i < foodItems.size()){
+			if(foodItems.get(i).getCost() > costMax){
 				foodItems.remove(i);
-				i--;
-				System.out.println("i: " + i);
+				//System.out.println("removed i: " + i);
+			}else{
+				i++;
 			}
 		}
 		
@@ -60,6 +62,8 @@ public class Optimization{
 		
 		List<FoodItem> returnArray = suggest(foodItems, costMax, proteinChoice, carbChoice, calorieChoice, sodiumChoice, fatChoice);
 		
+
+
 		System.out.println("Top 3 Suggestions: ");
 		int j = 0;
 		
@@ -90,6 +94,13 @@ public class Optimization{
 		
 		// Set percentages for the composite score
 		for(FoodItem food : foodItems){
+
+/*			double costPercent = Double.MIN_VALUE;
+			if(food.getCost() <= costMax){
+				costPercent = food.getCost()/ costMax;
+				food.setCostPercent(costPercent);
+			}*/
+
 			double proteinPercent = (double) food.getProtein() / suggestedProtein;
 			food.setProteinPercent(proteinPercent);
 			
@@ -114,8 +125,8 @@ public class Optimization{
 			Collections.sort(foodItems, new Comparator<FoodItem>() {
 		        @Override public int compare(FoodItem f1, FoodItem f2) {
 		        	
-		        	double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() );
-		        	double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() );
+		        	double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() /*+ f2.getCostPercent()*/);
+		        	double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() /*+ f1.getCostPercent()*/);
 		        	
 		        	f2.setCompScore(percent2);
 		        	f1.setCompScore(percent1);
@@ -135,8 +146,8 @@ public class Optimization{
 			Collections.sort(foodItems, new Comparator<FoodItem>() {
 				@Override public int compare(FoodItem f1, FoodItem f2) {
 				        	
-					double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() );
-					double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() );
+					double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() /*+ f1.getCostPercent()*/);
+					double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() /*+ f2.getCostPercent()*/);
 					
 					f1.setCompScore(percent1);
 					f2.setCompScore(percent2);
@@ -172,8 +183,8 @@ public class Optimization{
 				for(Double option : lowOptions){
 					lowSum += option;
 				}
-				
 				item.setCompScore(highSum - lowSum);
+
 				
 						
 			} // end for(FoodItem item : foodItems)
