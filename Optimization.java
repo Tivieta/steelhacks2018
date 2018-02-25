@@ -16,6 +16,7 @@ public class Optimization{
 		
 		Scanner scanner = new Scanner(System.in);
 		
+		//FIX THIS
 		System.out.print("Cost maximum:  ");
 		double costMax = scanner.nextDouble();
 		ArrayList<Integer> removeIndices = new ArrayList<Integer>();
@@ -49,9 +50,15 @@ public class Optimization{
 		System.out.print("Calorie - High (2), Low (1), n/a (0): ");
 		int calorieChoice = scanner.nextInt();
 		
+		System.out.print("Sodium - High (2), Low (1), n/a (0): ");
+		int sodiumChoice = scanner.nextInt();
+		
+		System.out.print("Fat - High (2), Low (1), n/a (0): ");
+		int fatChoice = scanner.nextInt();
+		
 		System.out.println();
 		
-		List<FoodItem> returnArray = suggest(foodItems, costMax, proteinChoice, carbChoice, calorieChoice);
+		List<FoodItem> returnArray = suggest(foodItems, costMax, proteinChoice, carbChoice, calorieChoice, sodiumChoice, fatChoice);
 		
 		System.out.println("Top 3 Suggestions: ");
 		int j = 0;
@@ -60,7 +67,6 @@ public class Optimization{
 			
 			if(j == 3)
 				break;
-			
 			
 			
 			System.out.println("Name: " + item.getName());
@@ -78,7 +84,8 @@ public class Optimization{
 		
 	}
 	
-	public static ArrayList<FoodItem> suggest(List<FoodItem> foodItems, double costMax, int proteinChoice, int carbChoice, int calorieChoice){
+	// ADD SODIUM AND FAT
+	public static ArrayList<FoodItem> suggest(List<FoodItem> foodItems, double costMax, int proteinChoice, int carbChoice, int calorieChoice, int sodiumChoice, int fatChoice){
 		List<FoodItem> returnArray = new ArrayList<FoodItem>();
 		
 		// Set percentages for the composite score
@@ -91,6 +98,12 @@ public class Optimization{
 			
 			double caloriePercent = (double) food.getCalories() / suggestedCalories;
 			food.setCalPercent(caloriePercent);
+			
+			double sodiumPercent = (double) food.getSodium() / suggestedSodium;
+			food.setSodiumPercent(sodiumPercent);
+			
+			double fatPercent = (double) food.getFat() / suggestedFat;
+			food.setFatPercent(fatPercent);
 	
 		}
 		
@@ -149,6 +162,8 @@ public class Optimization{
 				switchOptions(proteinChoice, item.getProteinPercent(), highOptions, lowOptions, noOptions);
 				switchOptions(carbChoice, item.getCarbPercent(), highOptions, lowOptions, noOptions);
 				switchOptions(calorieChoice, item.getCalPercent(), highOptions, lowOptions, noOptions);
+				switchOptions(sodiumChoice, item.getSodiumPercent(), highOptions, lowOptions, noOptions);
+				switchOptions(fatChoice, item.getFatPercent(), highOptions, lowOptions, noOptions);
 				
 				for(Double option : highOptions){
 					highSum += option;
@@ -196,6 +211,8 @@ public class Optimization{
 				break;
 		}
 		
+	
 	}
+	
 	
 }
