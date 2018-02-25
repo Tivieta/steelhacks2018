@@ -28,7 +28,7 @@ class NormalizedSort {
 			System.exit(0);
 		}
 		for(FoodItem f: list.keySet()){
-				//System.out.printf("%s: %d\n", f.getName(), list.get(f));
+				System.out.printf("%s: %d\n", f.getName(), list.get(f));
 				//System.out.printf("Variable name: %d\n", list.get(f).getClass().getName());
 				Double rawinput = list.get(f); //error cant cast to
 				Double newWeight = NormalizedValue(rawinput);
