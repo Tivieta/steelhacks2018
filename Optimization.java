@@ -173,12 +173,9 @@ public class Optimization{
 				switchOptions(proteinChoice, item.getProteinPercent(), highOptions, lowOptions, noOptions);
 				switchOptions(carbChoice, item.getCarbPercent(), highOptions, lowOptions, noOptions);
 				switchOptions(calorieChoice, item.getCalPercent(), highOptions, lowOptions, noOptions);
-<<<<<<< HEAD
-
 				switchOptions(sodiumChoice, item.getSodiumPercent(), highOptions, lowOptions, noOptions);
 				switchOptions(fatChoice, item.getFatPercent(), highOptions, lowOptions, noOptions);
 				
->>>>>>> 8ea9c5142902c748a3a65576ac327f75f761a130
 				for(Double option : highOptions){
 					highSum += option;
 				}
