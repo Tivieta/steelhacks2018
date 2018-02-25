@@ -1,3 +1,4 @@
+package com.example.android.justjava;
 
 public class FoodItem {
 	
@@ -9,7 +10,10 @@ public class FoodItem {
 	private int sodiumAmount;
 	private int totalFat;
 	
-	public FoodItem(String name, double cost, int protein, int carb, int calorie, int sodium, int fat){
+	public FoodItem(String name, double cost, int protein, int carb, int calorie, int sodium, int fat)
+	{
+		name = name;
+		cost = cost;
 		proteinAmount = protein;
 		carbAmount = carb;
 		calorieAmount = calorie;
