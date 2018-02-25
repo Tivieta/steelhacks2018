@@ -1,6 +1,6 @@
 //package com.example.android.justjava;
 
-public class FoodItem {
+public class FoodItem implements Comparable<FoodItem>{
 	
 	private String name;
 	private String restaurant = "Generic Restaurant";
@@ -50,8 +50,14 @@ public class FoodItem {
 		return totalFat;
 	}
 
-	public String toString(){
+	@Override 
+	public int compareTo(FoodItem other){
+		return this.name.compareTo(other.getName());
+	
+	}
 
+
+	public String toString(){
 		return String.format("Food Name: %s/nCalories: %d/nProtein: %d/nCarbs: %d/nFat: %d/nFrom Restaurant: %s/n", name, calorieAmount, proteinAmount, 
 		carbAmount, totalFat, restaurant);
 	}

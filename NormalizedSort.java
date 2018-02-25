@@ -1,5 +1,5 @@
 import java.util.*;
-class NormalizedSort{
+class NormalizedSort {
 	// normalizes food values
 	// can only take items that are of type 
 	// 
@@ -18,7 +18,7 @@ class NormalizedSort{
 	TreeMap<FoodItem, Double> foodList = new TreeMap<FoodItem, Double>();
 	boolean highOrLow = true; //high = 1, low = 0
 
-	NormalizedSort(TreeMap<FoodItem, Double> foodList, int hOrL){ 
+	NormalizedSort(TreeMap<FoodItem, Double> list, int hOrL){ 
 		if(hOrL==2){
 			highOrLow = true;
 		}else if(hOrL== 1){
@@ -27,8 +27,12 @@ class NormalizedSort{
 			System.err.printf("invalid string for high or low");
 			System.exit(0);
 		}
-		for(FoodItem f: foodList.keySet()){
-				this.foodList.put(f, NormalizedValue(foodList.get(f)));
+		for(FoodItem f: list.keySet()){
+				//System.out.printf("%s: %d\n", f.getName(), list.get(f));
+				//System.out.printf("Variable name: %d\n", list.get(f).getClass().getName());
+				Double rawinput = list.get(f); //error cant cast to
+				Double newWeight = NormalizedValue(rawinput);
+				foodList.put(f, newWeight);
 		}
 
 	}
@@ -65,20 +69,25 @@ class NormalizedSort{
 
 	} 
 
-	//
 	//x = input value
-	//
-	double NormalizedValue(int x){
-		return (double) ((a+(x-A)*(b-a))/(B-A));
+	Double NormalizedValue(int i){
 
-	}
-	double NormalizedValue(double x){
-		return (double) ((a+(x-A)*(b-a))/(B-A));
-
+		double x = (double)i;
+		return new Double(((a+(x-A)*(b-a))/(B-A)));
 	}
 
+	Double NormalizedValue(double x){
+		return new Double(((a+(x-A)*(b-a))/(B-A)));
 
-	public static void main(String args[]){
+	}
+
+	Double NormalizedValue(Double x){
+		return new Double(((a+(x.doubleValue()-A)*(b-a))/(B-A)));
+
+	}
+
+	public static void main(String[] args){
+
 		FoodItem burger = new FoodItem("Bob's Burger", 6.5, 26, 0, 271, 440, 18);
 		FoodItem crushOrange = new FoodItem("Crush Orange", 1.0, 0, 43, 160, 70, 0);
 		FoodItem cookies = new FoodItem("Grandma's Cookies", 3.0, 0, 30, 30, 10, 15);
@@ -113,7 +122,11 @@ class NormalizedSort{
 		TreeMap calories = new TreeMap<FoodItem, Double>();
 		for(FoodItem f: foodItems){
 			cost.put(f, f.getCost());
-			if(proteinChoice != 0){ protein.put(f, f.getProtein()); }
+			if(proteinChoice != 0){ 
+				//System.out.println(f.getProtein());
+				protein.put(f, new Double(f.getProtein())); 
+				System.out.printf("food: %s protein: %s\n",f.getName(), (protein.get(f)).toString());
+			}
 			if(carbChoice != 0 ){ carbs.put(f, f.getCarbs()); }
 			if(calorieChoice != 0 ){ calories.put(f, f.getCalories()); }
 		}
@@ -126,7 +139,8 @@ class NormalizedSort{
 
 		//protein
 		if(protein.size() !=0){
-			weightedProtein = new NormalizedSort(protein, proteinChoice);
+			System.out.println("protein:");
+			weightedProtein = new NormalizedSort(protein, proteinChoice); //problem child
 			if(options.size() ==0){
 				for(FoodItem f : weightedProtein.foodList.keySet()){
 					options.put(f, weightedProtein.foodList.get(f));
@@ -180,15 +194,33 @@ class NormalizedSort{
 			}
 		}
 
-		for(FoodItem f : options.keySet()){
-			System.out.println(f.toString());
+		Map results = sortByValues(options);
+		for( Object f : results.keySet()){
+			System.out.println(results.get(f).toString());
 			System.out.println("|");
 		}
 
+	}
 
-
-
-
+	//Method for sorting the TreeMap based on values
+  public static <K, V extends Comparable<V>> Map<K, V> 
+    sortByValues(final Map<K, V> map) {
+    Comparator<K> valueComparator = 
+             new Comparator<K>() {
+      public int compare(K k1, K k2) {
+        int compare = 
+              map.get(k1).compareTo(map.get(k2));
+        if (compare == 0) 
+          return 1;
+        else 
+          return compare;
+      }
+    };
+ 
+    Map<K, V> sortedByValues = 
+      new TreeMap<K, V>(valueComparator);
+    sortedByValues.putAll(map);
+    return sortedByValues;
 
 	}
 }
