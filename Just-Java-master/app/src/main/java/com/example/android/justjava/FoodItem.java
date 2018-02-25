@@ -13,6 +13,8 @@ public class FoodItem {
     private double proteinPercent;
     private double carbPercent;
     private double calPercent;
+    private double sodiumPercent;
+    private double fatPercent;
     private double compositeScore;
 
     public FoodItem(String name, String restaurant, double cost, int protein, int carb, int calorie, int sodium, int fat, double proteinPercent, double carbPercent, double calPercent, double compositeScore)
@@ -85,6 +87,22 @@ public class FoodItem {
 
     public double getCalPercent(){
         return calPercent;
+    }
+
+    public void setSodiumPercent(double p){
+        sodiumPercent = p;
+    }
+
+    public double getSodiumPercent(){
+        return sodiumPercent;
+    }
+
+    public void setFatPercent(double p){
+        fatPercent = p;
+    }
+
+    public double getFatPercent(){
+        return fatPercent;
     }
 
     public void setCompScore(double score){

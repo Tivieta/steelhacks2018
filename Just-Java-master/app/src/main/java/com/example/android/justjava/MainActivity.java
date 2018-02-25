@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         {
             sodium = 0;
         }
-        ArrayList<FoodItem> suggestedFoods = optimize.suggest(foodList,calcPrice,protein,carb,calories);
+        ArrayList<FoodItem> suggestedFoods = optimize.suggest(foodList,calcPrice,protein,carb,calories,sodium,fat);
         FoodItem top1 = suggestedFoods.get(0);
         FoodItem top2 = suggestedFoods.get(1);
         FoodItem top3 = suggestedFoods.get(2);
