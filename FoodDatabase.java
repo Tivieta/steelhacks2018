@@ -21,6 +21,16 @@ public class FoodDatabase {
 		foodList.add(new FoodItem("Chicken & Bacon Ranch Melt (6 inch)", "Subway", 4.75, 37, 44, 590, 1360, 30, 0.0, 0.0, 0.0, 0));
 		foodList.add(new FoodItem("Chicken & Bacon Ranch Melt (Footlong)", "Subway", 7.75, 74, 88, 1180, 2720, 60, 0.0, 0.0, 0.0, 0));
 		
+		foodList.add(new FoodItem("Wisconsin Mac & Cheese (Reg)", "Noodles and Company", 5.89, 42, 119, 980, 1560, 38, 0.0, 0.0, 0.0, 0));
+		foodList.add(new FoodItem("Spaghetti & Meatballs (Reg)", "Noodles and Company", 5.80, 35, 101, 980, 1570, 48, 0.0, 0.0, 0.0, 0));
+		foodList.add(new FoodItem("Pad Thai (Reg)", "Noodles and Company", 5.89, 19, 129, 1240, 1290, 70, 0.0, 0.0, 0.0, 0));
+		foodList.add(new FoodItem("Buttered Noodles (Reg)", "Noodles and Company", 5.39, 22, 98, 760, 600, 35, 0.0, 0.0, 0.0, 0));
+		
+		foodList.add(new FoodItem("Classic Chicken Sandwich", "Chick-fil-A", 3.05, 31, 39, 430, 1370, 17, 0.0, 0.0, 0.0, 0));
+		foodList.add(new FoodItem("Deluxe Chicken Sandwich", "Chick-fil-A", 3.65, 35, 43, 500, 1630, 21, 0.0, 0.0, 0.0, 0));
+		foodList.add(new FoodItem("12 Nuggets", "Chick-fil-A", 4.45, 37, 1, 359, 1320, 16, 0.0, 0.0, 0.0, 0));
+		foodList.add(new FoodItem("Medium Waffle Fries", "Chick-fil-A", 1.65, 4, 45, 387, 187, 21, 0.0, 0.0, 0.0, 0));
+		
 		return foodList;
 	}
 
