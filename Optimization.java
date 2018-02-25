@@ -16,19 +16,9 @@ public class Optimization{
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		//FIX THIS
 		System.out.print("Cost maximum:  ");
 		double costMax = scanner.nextDouble();
-		ArrayList<Integer> removeIndices = new ArrayList<Integer>();
-		
-		
-		try{
-			
-		}catch(IndexOutOfBoundsException e){
-			
-		}
-		
-		// Remove items with prices greater than the maximum cost provided by the user
+
 		int i = 0;
 		while( i < foodItems.size()){
 			if(foodItems.get(i).getCost() > costMax){
@@ -39,9 +29,6 @@ public class Optimization{
 			}
 		}
 		
-		/*for(int i = 0; i < removeIndices.size(); i++){
-			foodItems.remove((int) removeIndices.get(i));
-		}*/
 		
 		System.out.print("\nProtein - High (2), Low (1), n/a (0): ");
 		int proteinChoice = scanner.nextInt();
@@ -62,8 +49,6 @@ public class Optimization{
 		
 		List<FoodItem> returnArray = suggest(foodItems, costMax, proteinChoice, carbChoice, calorieChoice, sodiumChoice, fatChoice);
 		
-
-
 		System.out.println("Top 3 Suggestions: ");
 		int j = 0;
 		
@@ -88,19 +73,12 @@ public class Optimization{
 		
 	}
 	
-	// ADD SODIUM AND FAT
 	public static ArrayList<FoodItem> suggest(List<FoodItem> foodItems, double costMax, int proteinChoice, int carbChoice, int calorieChoice, int sodiumChoice, int fatChoice){
 		List<FoodItem> returnArray = new ArrayList<FoodItem>();
 		
 		// Set percentages for the composite score
 		for(FoodItem food : foodItems){
-
-/*			double costPercent = Double.MIN_VALUE;
-			if(food.getCost() <= costMax){
-				costPercent = food.getCost()/ costMax;
-				food.setCostPercent(costPercent);
-			}*/
-
+			
 			double proteinPercent = (double) food.getProtein() / suggestedProtein;
 			food.setProteinPercent(proteinPercent);
 			
@@ -119,14 +97,14 @@ public class Optimization{
 		}
 		
 		
-		// If the user wants all 3 to be HIGH
-		if(proteinChoice == 2 && carbChoice == 2 && calorieChoice == 2){
+		// If the user wants all 5 to be HIGH
+		if(proteinChoice == 2 && carbChoice == 2 && calorieChoice == 2 && sodiumChoice == 2 && fatChoice == 2){
 			
 			Collections.sort(foodItems, new Comparator<FoodItem>() {
 		        @Override public int compare(FoodItem f1, FoodItem f2) {
 		        	
-		        	double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() /*+ f2.getCostPercent()*/);
-		        	double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() /*+ f1.getCostPercent()*/);
+		        	double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() );
+		        	double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() );
 		        	
 		        	f2.setCompScore(percent2);
 		        	f1.setCompScore(percent1);
@@ -138,16 +116,16 @@ public class Optimization{
 			
 			returnArray = new ArrayList<FoodItem>(foodItems);
 			
-		} // end if(proteinChoice == 2 && carbChoice == 2 && calorieChoice == 2)
+		} // end if(proteinChoice == 2 && carbChoice == 2 && calorieChoice == 2 && sodiumChoice == 2 && fatChoice == 2)
 		
-		// If the user wants all 3 to be LOW
-		else if(proteinChoice == 1 && carbChoice == 1 && calorieChoice == 1){
+		// If the user wants all 5 to be LOW
+		else if(proteinChoice == 1 && carbChoice == 1 && calorieChoice == 1 && sodiumChoice == 1 && fatChoice == 1){
 					
 			Collections.sort(foodItems, new Comparator<FoodItem>() {
 				@Override public int compare(FoodItem f1, FoodItem f2) {
 				        	
-					double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() /*+ f1.getCostPercent()*/);
-					double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() /*+ f2.getCostPercent()*/);
+					double percent1 = ( f1.getProteinPercent() + f1.getCarbPercent() + f1.getCalPercent() );
+					double percent2 = ( f2.getProteinPercent() + f2.getCarbPercent() + f2.getCalPercent() );
 					
 					f1.setCompScore(percent1);
 					f2.setCompScore(percent2);
@@ -159,7 +137,7 @@ public class Optimization{
 					
 			returnArray = new ArrayList<FoodItem>(foodItems);
 					
-		} // end if(proteinChoice == 2 && carbChoice == 2 && calorieChoice == 2)
+		} // end else if(proteinChoice == 1 && carbChoice == 1 && calorieChoice == 1 && sodiumChoice == 1 && fatChoice == 1)
 		
 		else{
 			
@@ -183,8 +161,8 @@ public class Optimization{
 				for(Double option : lowOptions){
 					lowSum += option;
 				}
+				
 				item.setCompScore(highSum - lowSum);
-
 				
 						
 			} // end for(FoodItem item : foodItems)
