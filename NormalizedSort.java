@@ -17,7 +17,22 @@ class NormalizedSort{
 
 	TreeMap<FoodItem, Double> foodList = new TreeMap<FoodItem, Double>();
 	boolean highOrLow = true; //high = 1, low = 0
-	TreeMap<FoodItem, Double> NormalizerSort(TreeMap<FoodItem, Double> foodList, int hOrL, int limit){ // for calories
+
+	NormalizedSort(TreeMap<FoodItem, Double> foodList, int hOrL){ 
+		if(hOrL==2){
+			highOrLow = true;
+		}else if(hOrL== 1){
+			highOrLow = false;
+		}else{
+			System.err.printf("invalid string for high or low");
+			System.exit(0);
+		}
+		for(FoodItem f: foodList.keySet()){
+				this.foodList.put(f, NormalizedValue(foodList.get(f)));
+		}
+
+	}
+	NormalizedSort(TreeMap<FoodItem, Double> foodList, int hOrL, int limit){ // for calories
 		if(hOrL== 2){
 			highOrLow = true;
 		}else if(hOrL== 1){
@@ -36,44 +51,19 @@ class NormalizedSort{
 
 			}			
 		}
-		return foodList;
+		
 	} 	
 
-	TreeMap<FoodItem, Double> NormalizerSort(TreeMap<FoodItem, Double> foodList, int hOrL, double costLimit){ // for cost
-		if(hOrL== 2){
-			highOrLow = true;
-		}else if(hOrL== 1){
-			highOrLow = false;
-		}else{
-			System.err.printf("invalid int for high or low");
-			System.exit(0);
-		}
-		for(FoodItem f: foodList.keySet()){
-			if( highOrLow && f.getCost() >= costLimit ){
-				this.foodList.put(f, NormalizedValue(foodList.get(f)));
+	NormalizedSort(TreeMap<FoodItem, Double> foodList, double costLimit){ // for cost
 
-			}else if(!highOrLow && f.getCost() <= costLimit){
+		for(FoodItem f: foodList.keySet()){
+		 if(f.getCost() <= costLimit){
 				this.foodList.put(f, NormalizedValue(foodList.get(f)));
 
 			}			
 		}
 
-		return foodList;
 	} 
-
-
-	TreeMap<FoodItem, Double> NormalizedSort(TreeMap<FoodItem, Double> foodList, String hOrL){ 
-		if(hOrL.equals("high")){
-			highOrLow = true;
-		}else if(hOrL.equals("low")){
-			highOrLow = true;
-		}else{
-			System.err.printf("invalid string for high or low");
-			System.exit(0);
-		}
-	}
-
-
 
 	//
 	//x = input value
@@ -127,10 +117,75 @@ class NormalizedSort{
 			if(carbChoice != 0 ){ carbs.put(f, f.getCarbs()); }
 			if(calorieChoice != 0 ){ calories.put(f, f.getCalories()); }
 		}
+		NormalizedSort weightedCost = new NormalizedSort(cost, costMax);
+		NormalizedSort weightedProtein;
+		NormalizedSort weightedCarbs;
+		NormalizedSort weightedCalories;
+
+		TreeMap<FoodItem, Double> options = weightedCost.foodList;
+
+		//protein
 		if(protein.size() !=0){
-			NormalizedSort weightedProtein = new NormalizerSort()
+			weightedProtein = new NormalizedSort(protein, proteinChoice);
+			if(options.size() ==0){
+				for(FoodItem f : weightedProtein.foodList.keySet()){
+					options.put(f, weightedProtein.foodList.get(f));
+				}
+			}else{
+				for(FoodItem f : weightedProtein.foodList.keySet()){
+					options.replace(f, weightedProtein.foodList.get(f) * options.get(f));
+				}
+			}
 		}
-		//NormalizedSort
+
+		//cost
+		if(cost.size() !=0){
+			weightedCost = new NormalizedSort(cost, costMax);
+			if(options.size() ==0){
+				for(FoodItem f : weightedCost.foodList.keySet()){
+					options.put(f, weightedCost.foodList.get(f));
+				}
+			}else{
+				for(FoodItem f : weightedCost.foodList.keySet()){
+					options.replace(f, weightedCost.foodList.get(f) * options.get(f));
+				}
+			}
+		}
+
+		//carbs
+		if(carbs.size() !=0){
+			weightedCarbs = new NormalizedSort(carbs, proteinChoice);
+			if(options.size() ==0){
+				for(FoodItem f : weightedCarbs.foodList.keySet()){
+					options.put(f, weightedCarbs.foodList.get(f));
+				}
+			}else{
+				for(FoodItem f : weightedCarbs.foodList.keySet()){
+					options.replace(f, weightedCarbs.foodList.get(f) * options.get(f));
+				}
+			}
+		}
+
+		//calories
+		if(calories.size() !=0){
+			weightedCalories = new NormalizedSort(calories, proteinChoice);
+			if(options.size() ==0){
+				for(FoodItem f : weightedCalories.foodList.keySet()){
+					options.put(f, weightedCalories.foodList.get(f));
+				}
+			}else{
+				for(FoodItem f : weightedCalories.foodList.keySet()){
+					options.replace(f, weightedCalories.foodList.get(f) * options.get(f));
+				}
+			}
+		}
+
+		for(FoodItem f : options.keySet()){
+			System.out.println(f.toString());
+			System.out.println("|");
+		}
+
+
 
 
 
