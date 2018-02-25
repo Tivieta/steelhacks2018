@@ -57,6 +57,33 @@
                 android:text="Low" />
 
         </LinearLayout>
+        <RadioGroup
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="Calories"
+                android:textColor="@android:color/white"
+                android:paddingLeft = "16dp"
+                android:paddingRight="47dp"/>
+            <RadioButton
+                android:id="@+id/calories_high_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="36dp"
+                android:checked="false"/>
+            <RadioButton
+                android:id="@+id/calories_low_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:checked="false"
+
+                />
+
+        </RadioGroup>
 
         <RadioGroup
 
@@ -133,6 +160,37 @@
 
                 android:checked="false"
                />
+
+
+
+
+
+        </RadioGroup>
+        <RadioGroup
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="Sodium"
+                android:textColor="@android:color/white"
+                android:paddingLeft = "16dp"
+                android:paddingRight="50dp"/>
+            <RadioButton
+                android:id="@+id/sodium_high_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="36dp"
+                android:checked="false"/>
+            <RadioButton
+                android:id="@+id/sodium_low_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:checked="false"
+
+                />
 
         </RadioGroup>
 
